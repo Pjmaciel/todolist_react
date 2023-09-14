@@ -14,7 +14,15 @@ const TaskList = ({taskList}: Props) => {
         {taskList.length > 0 ? (
             taskList.map((task) => (
                 <div key={task.id}>
-                    <p>{task.title}</p>
+                    <div>
+                    <h4>{task.title}</h4>
+                    <p>Dificuldade: {task.difficulty}</p>
+                    </div>
+                    <i className="bi bi-pencil"></i>
+                    <i className="bi bi-trash"></i>
+                    <div>
+
+                    </div>
                 </div>
             ))
         ) : (
