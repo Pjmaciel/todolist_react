@@ -16,6 +16,7 @@ import { ITask } from "./interfaces/Task";
 
 function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);//Começa com um array vazio
+  const [taskToUpdate, setTaskToUpdate] = useState<ITask | null>(null);
 
   const iconDeleteTask = (id: number) => {
       setTaskList(
@@ -34,17 +35,31 @@ function App() {
     }
 }
 
-  const iconEditTask = ():void => {
+  const iconEditTask = (task: ITask):void => {
     hideOrShowModal(true);
+    setTaskToUpdate(task);
+};
+
+const updateTask = (id: number, title: string, difficulty: number) =>{
+
+  const updatedTask: ITask = {id, title, difficulty}
+
+  const updatedItens = taskList.map((task) => {
+    return task.id === updatedTask.id ? updatedTask : task
+  })
+
+  setTaskList(updatedItens)
+  hideOrShowModal(false)
+
 }
 
   return <div>
-    <Modal children={<TaskForm btnText="Editar Tarefa" taskList={taskList}/>}/>
+    <Modal children={<TaskForm btnText="Editar Tarefa"taskList={taskList} task={taskToUpdate} handleUpdate={updateTask}/>}/>
     <Header />
     <main className={styles.main}>
       <div>
         <h2>O que voce vai fazer?</h2>
-        <TaskForm btnText="Criar Tarefa" taskList={taskList} setTaskList={setTaskList}/>
+        <TaskForm btnText="Criar Tarefa" taskList={taskList} setTaskList={setTaskList} />
       </div>
       <div>
         <h2>Suas Tarefas:</h2>
